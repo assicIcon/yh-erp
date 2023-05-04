@@ -10,7 +10,7 @@
 ERP
 ├── gateway           网关
 ├── auth              认证中心
-├── admin             用户服务
+├── admin             后台管理服务
 ├── product           产品服务
 ├── order             订单服务
 ├── warehouse         仓储服务
