@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yihong.approval.mapper.ApprovalMapper">
+  <resultMap id="BaseResultMap" type="com.yihong.approval.entity.Approval">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="approval_id" jdbcType="VARCHAR" property="approvalId" />
+    <result column="approval_config_id" jdbcType="VARCHAR" property="approvalConfigId" />
+    <result column="business_id" jdbcType="VARCHAR" property="businessId" />
+    <result column="applicant_id" jdbcType="VARCHAR" property="applicantId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="approval_finish_time" jdbcType="TIMESTAMP" property="approvalFinishTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, approval_id, approval_config_id, business_id, applicant_id, `status`, remark, 
+    approval_finish_time, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.yihong.approval.entity.ApprovalExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from approval
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from approval
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from approval
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yihong.approval.entity.ApprovalExample">
+    delete from approval
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.yihong.approval.entity.Approval" useGeneratedKeys="true">
+    insert into approval (approval_id, approval_config_id, business_id, 
+      applicant_id, `status`, remark, 
+      approval_finish_time, create_time, update_time
+      )
+    values (#{approvalId,jdbcType=VARCHAR}, #{approvalConfigId,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR}, 
+      #{applicantId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, 
+      #{approvalFinishTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.yihong.approval.entity.Approval" useGeneratedKeys="true">
+    insert into approval
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="approvalId != null">
+        approval_id,
+      </if>
+      <if test="approvalConfigId != null">
+        approval_config_id,
+      </if>
+      <if test="businessId != null">
+        business_id,
+      </if>
+      <if test="applicantId != null">
+        applicant_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="approvalFinishTime != null">
+        approval_finish_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="approvalId != null">
+        #{approvalId,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalConfigId != null">
+        #{approvalConfigId,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null">
+        #{businessId,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantId != null">
+        #{applicantId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalFinishTime != null">
+        #{approvalFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yihong.approval.entity.ApprovalExample" resultType="java.lang.Long">
+    select count(*) from approval
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update approval
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.approvalId != null">
+        approval_id = #{record.approvalId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvalConfigId != null">
+        approval_config_id = #{record.approvalConfigId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessId != null">
+        business_id = #{record.businessId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicantId != null">
+        applicant_id = #{record.applicantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvalFinishTime != null">
+        approval_finish_time = #{record.approvalFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update approval
+    set id = #{record.id,jdbcType=BIGINT},
+      approval_id = #{record.approvalId,jdbcType=VARCHAR},
+      approval_config_id = #{record.approvalConfigId,jdbcType=VARCHAR},
+      business_id = #{record.businessId,jdbcType=VARCHAR},
+      applicant_id = #{record.applicantId,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      approval_finish_time = #{record.approvalFinishTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yihong.approval.entity.Approval">
+    update approval
+    <set>
+      <if test="approvalId != null">
+        approval_id = #{approvalId,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalConfigId != null">
+        approval_config_id = #{approvalConfigId,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null">
+        business_id = #{businessId,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantId != null">
+        applicant_id = #{applicantId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalFinishTime != null">
+        approval_finish_time = #{approvalFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yihong.approval.entity.Approval">
+    update approval
+    set approval_id = #{approvalId,jdbcType=VARCHAR},
+      approval_config_id = #{approvalConfigId,jdbcType=VARCHAR},
+      business_id = #{businessId,jdbcType=VARCHAR},
+      applicant_id = #{applicantId,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      approval_finish_time = #{approvalFinishTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
